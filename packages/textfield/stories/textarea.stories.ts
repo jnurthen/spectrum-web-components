@@ -9,7 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, boolean } from '@open-wc/demoing-storybook';
+import { html, select } from '@open-wc/demoing-storybook';
+import { ifDefined } from 'lit-html/directives/if-defined';
 
 import '../';
 import { TemplateResult } from 'lit-html';
@@ -20,61 +21,69 @@ export default {
 };
 
 export const Default = (): TemplateResult => {
-    const grows = boolean('Grows', false, 'Element');
-    const quiet = boolean('Quiet', false, 'Element');
+    const dir = select(
+        'Text direction',
+        {
+            None: 'none',
+            'Left to right': 'ltr',
+            'Right to left': 'rtl',
+        },
+        'ltr',
+        'Element'
+    );
     return html`
         <sp-textfield
+            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             multiline
             label="Enter your life story"
-            ?grows=${grows}
-            ?quiet=${quiet}
+            placeholder="Enter your life story"
         ></sp-textfield>
         <sp-textfield
+            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             multiline
             label="Enter your life story"
+            placeholder="Enter your life story"
             disabled
-            ?grows=${grows}
-            ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
+            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             multiline
             label="Enter your life story"
+            placeholder="Enter your life story"
             pattern="[\\w\\s]+"
             required
             valid
             value="A valid input"
-            ?grows=${grows}
-            ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
+            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             multiline
             label="Enter your life story"
+            placeholder="Enter your life story"
             required
             valid
             value="A valid input"
             disabled
-            ?grows=${grows}
-            ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
+            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             multiline
             label="Enter your life story"
+            placeholder="Enter your life story"
             pattern="[\\d]+"
             required
             value="Not a valid input"
-            ?grows=${grows}
-            ?quiet=${quiet}
         ></sp-textfield>
         <sp-textfield
+            dir=${ifDefined(dir === 'none' ? undefined : dir)}
             multiline
             label="Enter your life story"
+            placeholder="Enter your life story"
             pattern="[\\d]+"
             invalid
             required
             value="Not a valid input"
             disabled
-            ?grows=${grows}
-            ?quiet=${quiet}
         ></sp-textfield>
     `;
 };

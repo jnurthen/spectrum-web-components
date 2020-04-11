@@ -2700,10 +2700,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-2.1.5.tgz#5f64eac57b228c3929cfcf25676aa680ec2c3bfe"
   integrity sha512-k6Gw6cuSPu8DZGS+pGRB/0HsInjFR5TlYeOYcIXMUQ1iQAofqsFkc+RV7aRYpNNYeq+xkBTq8wGEvKVQXzOm9Q==
 
-"@spectrum-css/textfield@^2.0.5":
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-2.0.6.tgz#2e796ee1d0c5732bf089e4168662b8940cefc9f1"
-  integrity sha512-lbr9HuXGOjmZ6K0MmODA3u7DRaaVk1P2aqqJkKy6xIY9u2nRKg/nna3TANJRqVnYMvRAdsWiH2vTWTBkRrCsGg==
+"@spectrum-css/textfield@^3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-3.0.0-beta.2.tgz#faaf06ab74b934452e939ffbcf04eb377cd8ac96"
+  integrity sha512-a93KXXDuJB2ZoWJ7z1TBIg4AMk+KWRqGV4Kk0GabqiM7Z2AzZIGft5KuM7NoR96MipVH3oRcvBYi2CvwkOUw7A==
 
 "@spectrum-css/toast@^2.0.2":
   version "2.0.5"

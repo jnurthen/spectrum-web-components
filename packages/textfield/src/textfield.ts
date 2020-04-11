@@ -118,7 +118,7 @@ export class Textfield extends Focusable {
                 <sp-icon
                     id="invalid"
                     name="ui:AlertSmall"
-                    class="alert-small"
+                    class="icon alert-small"
                 ></sp-icon>
             `;
         } else if (this.valid) {
@@ -127,37 +127,37 @@ export class Textfield extends Focusable {
                 <sp-icon
                     id="valid"
                     name="ui:CheckmarkSmall"
-                    class="checkmark-small"
+                    class="icon checkmark-small"
                 ></sp-icon>
             `;
         }
         return nothing;
     }
 
-    protected render(): TemplateResult {
-        if (this.multiline) {
-            return html`
-                ${this.grows
-                    ? html`
-                          <div id="sizer">${this.value}</div>
-                      `
-                    : nothing}
-                <!-- @ts-ignore -->
-                <textarea
-                    aria-label=${this.label || this.placeholder}
-                    id="input"
-                    pattern=${ifDefined(this.pattern)}
-                    placeholder=${this.placeholder}
-                    .value=${this.value}
-                    @change=${this.onChange}
-                    @input=${this.onInput}
-                    ?disabled=${this.disabled}
-                    ?required=${this.required}
-                    autocomplete=${ifDefined(this.autocomplete)}
-                ></textarea>
-                ${this.renderStateIcons()}
-            `;
-        }
+    private get renderMultiline(): TemplateResult {
+        return html`
+            ${this.grows
+                ? html`
+                      <div id="sizer">${this.value}</div>
+                  `
+                : nothing}
+            <!-- @ts-ignore -->
+            <textarea
+                aria-label=${this.label || this.placeholder}
+                id="input"
+                pattern=${ifDefined(this.pattern)}
+                placeholder=${this.placeholder}
+                .value=${this.value}
+                @change=${this.onChange}
+                @input=${this.onInput}
+                ?disabled=${this.disabled}
+                ?required=${this.required}
+                autocomplete=${ifDefined(this.autocomplete)}
+            ></textarea>
+        `;
+    }
+
+    private get renderInput(): TemplateResult {
         return html`
             <!-- @ts-ignore -->
             <input
@@ -172,7 +172,13 @@ export class Textfield extends Focusable {
                 ?required=${this.required}
                 autocomplete=${ifDefined(this.autocomplete)}
             />
+        `;
+    }
+
+    protected render(): TemplateResult {
+        return html`
             ${this.renderStateIcons()}
+            ${this.multiline ? this.renderMultiline : this.renderInput}
         `;
     }
 
@@ -203,5 +209,12 @@ export class Textfield extends Focusable {
             return this.valid;
         }
         return true;
+    }
+
+    public connectedCallback(): void {
+        if (!this.hasAttribute('dir')) {
+            this.dir = document.dir || 'ltr';
+        }
+        super.connectedCallback();
     }
 }
