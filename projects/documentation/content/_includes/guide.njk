@@ -1,0 +1,16 @@
+---
+layout: layout.njk
+---
+<docs-page class="spectrum-Typography">
+    {% include "partials/logo.njk" %}
+    {{ content | safe }}
+    {% include "partials/sidenav.njk" %}
+</docs-page>
+<script type="module" src="../../src/index.js"></script>
+<script defer>
+    if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js');
+    });
+    }
+</script>

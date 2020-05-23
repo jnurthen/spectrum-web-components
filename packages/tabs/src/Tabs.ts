@@ -133,7 +133,7 @@ export class Tabs extends Focusable {
      * This will force apply the focus visible styling.
      * It should always do so when this styling is already applied.
      */
-    public shouldApplyFocusVisible = false;
+    private shouldApplyFocusVisible = false;
 
     private manageFocusinType = (): void => {
         if (this.shouldApplyFocusVisible) {
