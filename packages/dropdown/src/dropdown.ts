@@ -301,6 +301,7 @@ export class DropdownBase extends Focusable {
                 aria-haspopup="true"
                 aria-label=${ifDefined(this.label || undefined)}
                 id="button"
+                class="button"
                 @blur=${this.onButtonBlur}
                 @click=${this.onButtonClick}
                 @focus=${this.onButtonFocus}

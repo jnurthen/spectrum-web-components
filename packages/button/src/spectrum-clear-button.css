@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([variant='overBackground']) #button:focus-visible:after {
+:host([variant='overBackground']) .button:focus-visible:after {
     /* .spectrum-ClearButton--overBackground.focus-ring:after */
     margin: calc(
         var(
@@ -29,7 +29,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-global-color-static-white)
         );
 }
-#button {
+.button {
     /* .spectrum-ClearButton */
     width: var(
         --spectrum-clearbutton-medium-width,
@@ -52,12 +52,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color)
     );
 }
-#button > .icon {
+.button > .icon {
     /* .spectrum-ClearButton>.spectrum-Icon */
     margin: 0 auto; /* .spectrum-ClearButton>.spectrum-Icon */
     margin: 0;
 }
-:host([small]) #button {
+:host([small]) .button {
     /* .spectrum-ClearButton--small */
     width: var(
         --spectrum-clearbutton-small-width,
@@ -68,7 +68,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-300)
     );
 }
-#button:hover {
+.button:hover {
     /* .spectrum-ClearButton:hover */
     background-color: var(
         --spectrum-clearbutton-medium-background-color-hover,
@@ -79,7 +79,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-hover)
     );
 }
-#button:active {
+.button:active {
     /* .spectrum-ClearButton:active */
     background-color: var(
         --spectrum-clearbutton-medium-background-color-down,
@@ -90,7 +90,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-down)
     );
 }
-#button:focus-visible {
+.button:focus-visible {
     /* .spectrum-ClearButton.focus-ring */
     background-color: var(
         --spectrum-clearbutton-medium-background-color-key-focus,
@@ -101,8 +101,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-focus)
     );
 }
-#button.is-disabled,
-#button:disabled {
+.button.is-disabled,
+.button:disabled {
     /* .spectrum-ClearButton.is-disabled,
    * .spectrum-ClearButton:disabled */
     background-color: var(
@@ -114,7 +114,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-icon-color-disabled)
     );
 }
-:host([variant='overBackground']) #button {
+:host([variant='overBackground']) .button {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet,
    * .spectrum-ClearButton--overBackground */
     background-color: var(
@@ -130,8 +130,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-:host([variant='overBackground']) #button:focus-visible,
-:host([variant='overBackground']) #button:hover {
+:host([variant='overBackground']) .button:focus-visible,
+:host([variant='overBackground']) .button:hover {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-Button--overBackground.spectrum-Button--quiet:hover,
    * .spectrum-ClearButton--overBackground.focus-ring,
@@ -149,12 +149,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-:host([variant='overBackground']) #button:focus-visible {
+:host([variant='overBackground']) .button:focus-visible {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.focus-ring,
    * .spectrum-ClearButton--overBackground.focus-ring */
     box-shadow: none;
 }
-:host([variant='overBackground']) #button:active {
+:host([variant='overBackground']) .button:active {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet:active,
    * .spectrum-ClearButton--overBackground:active */
     background-color: var(
@@ -170,8 +170,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-:host([variant='overBackground']) #button.is-disabled,
-:host([variant='overBackground']) #button:disabled {
+:host([variant='overBackground']) .button.is-disabled,
+:host([variant='overBackground']) .button:disabled {
     /* .spectrum-Button--overBackground.spectrum-Button--quiet.is-disabled,
    * .spectrum-Button--overBackground.spectrum-Button--quiet:disabled,
    * .spectrum-ClearButton--overBackground.is-disabled,

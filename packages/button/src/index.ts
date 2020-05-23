@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 export * from './button.js';
 export * from './action-button.js';
 export * from './clear-button.js';
+export * from './button-base.js';
 
 import { Button } from './button.js';
 import { ActionButton } from './action-button.js';
