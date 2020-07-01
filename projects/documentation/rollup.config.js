@@ -16,6 +16,7 @@ import load from './src/utils/posthtml-loading';
 const Terser = require('terser');
 const { postCSSPlugins } = require('../../scripts/css-processing.js');
 const purgecss = require('@fullhuman/postcss-purgecss');
+const fs = require('fs-extra');
 
 const transform = (inputPath) => {
     const url = inputPath.split('_site/')[1];
@@ -60,9 +61,13 @@ const transform = (inputPath) => {
                 });
             }
         }
+        const styleString = fs.readFileSync(
+            `${process.cwd()}/dist/styles.css`,
+            { encoding: 'utf8' }
+        );
         return posthtml()
             .use(
-                spectrumMarkdown(url),
+                spectrumMarkdown(url, styleString),
                 ...preloadModules.map((preloadModule) =>
                     load([preloadModule.fileName], preloadModule.options)
                 )

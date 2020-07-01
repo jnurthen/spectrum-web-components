@@ -14,9 +14,18 @@ import postHTMLSpectrumTypeography from './posthtml-spectrum-typography';
 
 // Add a few doc-specific transforms for code examples
 
-export default (url) =>
+export default (url, styleString) =>
     postHTMLSpectrumTypeography({
         customTransforms: [
+            {
+                selector: '[href="styles.css"]',
+                fn: (node) => {
+                    return {
+                        tag: 'style',
+                        content: [styleString],
+                    };
+                },
+            },
             {
                 selector: 'pre',
                 fn: (node) => {
