@@ -40,7 +40,8 @@ import {
     MenuItem,
     MenuItemQueryRoleEventDetail,
 } from '@spectrum-web-components/menu-item';
-import { Placement } from '@spectrum-web-components/overlay';
+import { Placement, Overlay } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/popover';
 
 /**
  * @slot label - The placeholder content for the dropdown
@@ -167,12 +168,14 @@ export class DropdownBase extends Focusable {
         if (event.code !== 'ArrowDown') {
             return;
         }
+        event.preventDefault();
         /* istanbul ignore if */
         if (!this.optionsMenu) {
             return;
         }
         this.open = true;
     }
+
     public setValueFromItem(item: MenuItem): void {
         const oldSelectedItemText = this.selectedItemText;
         const oldValue = this.value;
@@ -198,7 +201,6 @@ export class DropdownBase extends Focusable {
         }
         item.selected = true;
         this.open = false;
-        this.focus();
     }
 
     public toggle(): void {
@@ -257,30 +259,16 @@ export class DropdownBase extends Focusable {
         if (menuWidth) {
             this.popover.style.setProperty('width', menuWidth);
         }
-        const Overlay = await Promise.all([
-            import('@spectrum-web-components/overlay'),
-            import('@spectrum-web-components/popover'),
-        ]).then(
-            ([module]) =>
-                (module as typeof import('@spectrum-web-components/overlay'))
-                    .Overlay
-        );
-        this.closeOverlay = Overlay.open(this.button, 'click', this.popover, {
-            placement: this.placement,
-        });
-        requestAnimationFrame(() => {
-            /* istanbul ignore else */
-            if (this.optionsMenu) {
-                /* Trick :focus-visible polyfill into thinking keyboard based focus */
-                this.dispatchEvent(
-                    new KeyboardEvent('keydown', {
-                        code: 'Tab',
-                    })
-                );
-                this.optionsMenu.focus();
+        this.closeOverlay = await Overlay.open(
+            this.button,
+            'inline',
+            this.popover,
+            {
+                placement: this.placement,
+                receivesFocus: 'auto',
             }
-            this.menuStateResolver();
-        });
+        );
+        this.menuStateResolver();
     }
 
     private closeMenu(): void {

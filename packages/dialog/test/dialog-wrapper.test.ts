@@ -15,12 +15,15 @@ import { spy } from 'sinon';
 
 import '..';
 import { Dialog, DialogWrapper } from '..';
-import { Button } from '@spectrum-web-components/button';
+import '@spectrum-web-components/underlay';
+import { Underlay } from '@spectrum-web-components/underlay';
+import { Button, ActionButton } from '@spectrum-web-components/button';
 import {
     wrapperLabeledHero,
     wrapperDismissible,
     wrapperButtons,
     wrapperFullscreen,
+    wrapperButtonsUnderlay,
 } from '../stories/dialog-wrapper.stories.js';
 
 describe('Dialog Wrapper', () => {
@@ -45,6 +48,24 @@ describe('Dialog Wrapper', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('loads with underlay and no headline accessibly', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        await elementUpdated(el);
+        el.headline = '';
+        await elementUpdated(el);
+        expect(el).to.be.accessible();
+    });
+    it('dismisses via clicking the underlay', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        el.dismissible = true;
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const underlay = root.querySelector('sp-underlay') as Underlay;
+        underlay.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.false;
+    });
     it('dismisses', async () => {
         const el = await fixture<DialogWrapper>(wrapperDismissible());
 
@@ -57,6 +78,50 @@ describe('Dialog Wrapper', () => {
 
         await elementUpdated(el);
         expect(el.open).to.be.false;
+    });
+    it('manages entry focus - dismissible', async () => {
+        const el = await fixture<DialogWrapper>(wrapperDismissible());
+
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        expect(document.activeElement, 'no focused').to.not.equal(el);
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const dialog = root.querySelector('sp-dialog') as Dialog;
+        const dialogRoot = dialog.shadowRoot ? dialog.shadowRoot : dialog;
+        const dismissButton = dialogRoot.querySelector(
+            '.close-button'
+        ) as ActionButton;
+
+        el.focus();
+        await elementUpdated(el);
+        expect(document.activeElement, 'focused generally').to.equal(el);
+        expect(
+            (dismissButton.getRootNode() as Document).activeElement,
+            'focused specifically'
+        ).to.equal(dismissButton);
+
+        dismissButton.click();
+        await elementUpdated(el);
+        expect(el.open).to.be.false;
+    });
+    it('manages entry focus - buttons', async () => {
+        const el = await fixture<DialogWrapper>(wrapperButtons());
+
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        expect(document.activeElement, 'no focused').to.not.equal(el);
+
+        const root = el.shadowRoot ? el.shadowRoot : el;
+        const button = root.querySelector('sp-button') as Button;
+
+        el.focus();
+        await elementUpdated(el);
+        expect(document.activeElement, 'focused generally').to.equal(el);
+        expect(
+            (button.getRootNode() as Document).activeElement,
+            'focused specifically'
+        ).to.equal(button);
     });
     it('dispatches `confirm`, `cancel` and `secondary`', async () => {
         const confirmSpy = spy();

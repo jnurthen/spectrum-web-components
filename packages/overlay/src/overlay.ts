@@ -22,6 +22,7 @@ type OverlayOptions = {
     delayed?: boolean;
     placement?: Placement;
     offset?: number;
+    receivesFocus?: 'auto';
 };
 
 /**
@@ -64,14 +65,14 @@ export class Overlay {
      * @param options.placement side on which to position the overlay
      * @returns an Overlay object which can be used to close the overlay
      */
-    public static open(
+    public static async open(
         owner: HTMLElement,
         interaction: TriggerInteractions,
         overlayElement: HTMLElement,
         options: OverlayOptions
-    ): () => void {
+    ): Promise<() => void> {
         const overlay = new Overlay(owner, interaction, overlayElement);
-        overlay.open(options);
+        await overlay.open(options);
         return (): void => {
             overlay.close();
         };
@@ -99,6 +100,7 @@ export class Overlay {
         delayed,
         offset = 0,
         placement = 'top',
+        receivesFocus,
     }: OverlayOptions): Promise<boolean> {
         /* istanbul ignore if */
         if (this.isOpen) return true;
@@ -131,7 +133,7 @@ export class Overlay {
         });
         this.overlayElement.dispatchEvent(queryOverlayDetailEvent);
 
-        Overlay.overlayStack.openOverlay({
+        await Overlay.overlayStack.openOverlay({
             content: this.overlayElement,
             contentTip: overlayDetailQuery.overlayContentTipElement,
             delayed,
@@ -140,6 +142,7 @@ export class Overlay {
             trigger: this.owner,
             interaction: this.interaction,
             theme: queryThemeDetail,
+            receivesFocus,
             ...overlayDetailQuery,
         });
         this.isOpen = true;

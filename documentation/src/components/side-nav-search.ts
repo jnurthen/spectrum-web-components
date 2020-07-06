@@ -51,10 +51,10 @@ class SearchComponent extends LitElement {
         }
     }
 
-    private openPopover() {
+    private async openPopover() {
         if (!this.popover) return;
 
-        this.closeOverlay = Overlay.open(this, 'click', this.popover, {
+        this.closeOverlay = await Overlay.open(this, 'click', this.popover, {
             placement: 'bottom',
         });
     }

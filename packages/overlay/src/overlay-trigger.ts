@@ -41,6 +41,9 @@ export class OverlayTrigger extends LitElement {
     @property({ reflect: true })
     public placement: Placement = 'bottom';
 
+    @property()
+    public type?: 'inline' | 'modal';
+
     @property({ type: Number, reflect: true })
     public offset = 6;
 
@@ -55,9 +58,9 @@ export class OverlayTrigger extends LitElement {
         return html`
             <div
                 id="trigger"
-                @click=${this.onTriggerClick}
-                @mouseenter=${this.onTriggerMouseEnter}
-                @mouseleave=${this.onTriggerMouseLeave}
+                @click=${this.onTrigger}
+                @mouseenter=${this.onTrigger}
+                @mouseleave=${this.onTrigger}
             >
                 <slot
                     @slotchange=${this.onTargetSlotChange}
@@ -77,25 +80,54 @@ export class OverlayTrigger extends LitElement {
         `;
     }
 
-    public onTriggerClick(): void {
+    private onTrigger(event: Event): void {
+        if (this.disabled) {
+            return;
+        }
+        switch (event.type) {
+            case 'click':
+                this.onTriggerClick();
+                return;
+            case 'mouseenter':
+                this.onTriggerMouseEnter();
+                return;
+            case 'mouseleave':
+                this.onTriggerMouseLeave();
+                return;
+        }
+    }
+
+    public async onTriggerClick(): Promise<void> {
         /* istanbul ignore else */
         if (this.targetContent && this.clickContent) {
-            this.closeClickOverlay = Overlay.open(
+            if (this.type === 'modal') {
+                this.clickContent.tabIndex = 0;
+            }
+            this.closeClickOverlay = await Overlay.open(
                 this.targetContent,
-                'click',
+                this.type ? this.type : 'click',
                 this.clickContent,
                 {
                     offset: this.offset,
                     placement: this.placement,
+                    receivesFocus: this.type ? 'auto' : undefined,
                 }
             );
         }
     }
 
-    public onTriggerMouseEnter(): void {
+    private hoverOverlayReady = Promise.resolve();
+
+    public async onTriggerMouseEnter(): Promise<void> {
         /* istanbul ignore else */
         if (this.targetContent && this.hoverContent) {
-            this.closeHoverOverlay = Overlay.open(
+            let overlayReady: () => void = () => {
+                return;
+            };
+            this.hoverOverlayReady = new Promise((res) => {
+                overlayReady = res;
+            });
+            this.closeHoverOverlay = await Overlay.open(
                 this.targetContent,
                 'hover',
                 this.hoverContent,
@@ -104,10 +136,12 @@ export class OverlayTrigger extends LitElement {
                     placement: this.placement,
                 }
             );
+            overlayReady();
         }
     }
 
-    public onTriggerMouseLeave(): void {
+    public async onTriggerMouseLeave(): Promise<void> {
+        await this.hoverOverlayReady;
         /* istanbul ignore else */
         if (this.closeHoverOverlay) {
             this.closeHoverOverlay();
@@ -145,10 +179,6 @@ export class OverlayTrigger extends LitElement {
         if (this.closeClickOverlay) {
             this.closeClickOverlay();
             delete this.closeClickOverlay;
-        }
-        if (this.closeHoverOverlay) {
-            this.closeHoverOverlay();
-            delete this.closeHoverOverlay;
         }
         super.disconnectedCallback();
     }

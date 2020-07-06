@@ -16,12 +16,14 @@ import {
     TemplateResult,
     property,
     CSSResultArray,
+    query,
 } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined';
 
 import '@spectrum-web-components/underlay';
 
 import styles from './dialog-wrapper.css.js';
+import { Dialog } from './dialog.js';
 
 /**
  * @element sp-dialog-wrapper
@@ -81,10 +83,34 @@ export class DialogWrapper extends LitElement {
     @property({ type: Boolean })
     public underlay = false;
 
-    private dismiss(): void {
-        if (!this.dismissible) {
-            return;
+    @query('sp-dialog')
+    private dialog!: Dialog;
+
+    public focus(): void {
+        /* istanbul ignore else */
+        if (this.shadowRoot) {
+            const firstFocusable = this.shadowRoot.querySelector(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            ) as LitElement;
+            if (firstFocusable) {
+                /* istanbul ignore else */
+                if (firstFocusable.updateComplete) {
+                    firstFocusable.updateComplete.then(() =>
+                        firstFocusable.focus()
+                    );
+                } else {
+                    firstFocusable.focus();
+                }
+                this.removeAttribute('tabindex');
+            } else {
+                this.dialog.focus();
+            }
+        } else {
+            super.focus();
         }
+    }
+
+    private dismiss(): void {
         this.close();
     }
 
