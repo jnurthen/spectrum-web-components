@@ -15,3 +15,12 @@ import './styles.css';
 
 // import the components we'll use in this page
 import '@spectrum-web-components/button';
+import '@spectrum-web-components/checkbox';
+import '@spectrum-web-components/radio-group';
+import '@spectrum-web-components/radio';
+import '@spectrum-web-components/dropdown';
+import '@spectrum-web-components/link';
+import '@spectrum-web-components/slider';
+import '@spectrum-web-components/textfield';
+import '@spectrum-web-components/tooltip';
+import '@spectrum-web-components/dialog';
