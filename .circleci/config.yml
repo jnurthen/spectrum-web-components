@@ -42,7 +42,7 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
-                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-e1a675e52a2f080749bf48aed64c5def316b9120
+                      - v1-golden-images-<< parameters.regression_color >>-<< parameters.regression_scale >>-1c494cd4414915d82bb6423969cb4da7946366a3
                       - v1-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-
             - run: yarn test:visual:ci --color=<< parameters.regression_color >> --scale=<< parameters.regression_scale >>
             - run:
